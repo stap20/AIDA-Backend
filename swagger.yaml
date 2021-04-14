@@ -1,0 +1,672 @@
+swagger: "2.0"
+info:
+  description: "This is the documenation for the server supporting AIDA. This documentation includes all the requests needed to support all the core functionalities on both mobile application and website."
+  version: "1.0.0"
+  title: "AIDA API"
+  #termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "AIDA@gmail.com"
+  #license:
+  #  name: "Apache 2.0"
+  #  url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "6e07b012.ngrok.io"
+basePath: "/"
+tags:
+- name: "Parent"
+  description: "Operations about parent"
+  externalDocs:
+    description: "Find out more"
+    url: "http://TBD"
+- name: "Child"
+  description: "Operations about child"
+  externalDocs:
+    description: "Find out more"
+    url: "http://TBD"
+schemes:
+- "https"
+- "http"
+paths:
+  /login:
+    post:
+      tags:
+      - "Parent"
+      summary: "Logs user into the system"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Update user data"
+        schema:
+          $ref: "#/definitions/login"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Welcome back  + email, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+  /signup:
+    post:
+      tags:
+      - "Parent"
+      summary: "Signup request"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Signup body"
+        required: true
+        schema:
+          $ref: "#/definitions/signup"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Signup successful, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /logout:
+    get:
+      tags:
+      - "Parent"
+      summary: "Logs out current logged in user session"
+      description: ""
+      responses:
+        default:
+          description: "success: true
+                       "
+          
+
+  /generate_child_code:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get child code"
+      description: "Generate new child code, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "success: true, 
+                        child_code: string
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /addchild:
+    post:
+      tags:
+      - "Parent"
+      summary: "Add new child"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Add new child body"
+        required: true
+        schema:
+          $ref: "#/definitions/addchild"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Child added successful, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /get_all_child_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get all child data for parent"
+      description: "Display list of all child data for parent, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Successful get data, 
+                        result: result list of json like in example below
+                        "
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Child"
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /get_child_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get selected child data for parent"
+      description: "Display selected child data for parent, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "get selected child data"
+        schema:
+          $ref: "#/definitions/selected_child"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Successful get data, 
+                        result: result is json like in example below
+                        "
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Child"
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /modifi_child_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Modifiy selected child data"
+      description: "Modifiy selected child data, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Update selected child data"
+        schema:
+          $ref: "#/definitions/modifiy_child"
+      responses:
+        200:
+          description: "success: true, 
+                        message: modified successful, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /remove_child:
+    post:
+      tags:
+      - "Parent"
+      summary: "Remove selected child"
+      description: "Remove selected child, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        description: "Remove child"
+        schema:
+          $ref: "#/definitions/selected_child"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Child removed successful, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /submit_questionaire:
+    post:
+      tags:
+      - "Parent"
+      summary: "Submit questionnaire request"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Submit questionnaire body"
+        required: true
+        schema:
+          $ref: "#/definitions/submit_questionaire"
+      responses:
+        200:
+          description: "success: true, 
+                        message: answer submited successful, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /get_questionaire_report_pdf:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get questionaire report pdf"
+      description: "Get questionaire report, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Get questionaire report pdf body"
+        required: true
+        schema:
+          $ref: "#/definitions/get_questionaire_report_pdf"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Successful,
+                        result: path of this pdf file for future method, 
+                        file: Also return pdf file
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /get_all_questionaire_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get all questionnaire data available for parent"
+      description: "Display list of all questionnaire data available for parent, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Get questionaire report pdf body"
+        required: true
+        schema:
+          $ref: "#/definitions/get_questionaire_report_pdf"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Successful get data, 
+                        result: result list of json like in example below
+                        "
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Questionaire"
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+  /get_child_questionaire_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get questionnaire data available for selected child"
+      description: "Display questionnaire data available for selected child, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Get questionnaire data for selected child"
+        required: true
+        schema:
+          $ref: "#/definitions/selected_child"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Successful get data, 
+                        result: result is json like in example below
+                        "
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Questionaire"
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+
+
+          
+  /get_user_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Get all data for user"
+      description: "Display user data, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Successful get data, 
+                        result: result is json like in example below
+                        "
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Parent"
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+ 
+  /modifi_user_data:
+    post:
+      tags:
+      - "Parent"
+      summary: "Modifiy user data"
+      description: "Modifiy user data, This can only be done by the logged in user."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Update user data"
+        schema:
+          $ref: "#/definitions/modifiy_parent"
+      responses:
+        200:
+          description: "success: true, 
+                        message: modified successful, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+  /loginChild:
+    post:
+      tags:
+      - "Child"
+      summary: "Logs child into the system"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/selected_child"
+      responses:
+        200:
+          description: "success: true, 
+                        message: Welcome back  + child_code, 
+                        "
+        400:
+          description: "success: false, 
+                        message: string contain error message for dev, 
+                        errors: - Array<String> (if exist) for user
+                        "
+# securityDefinitions:
+#   petstore_auth:
+#     type: "oauth2"
+#     authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+#     flow: "implicit"
+#     scopes:
+#       write:pets: "modify pets in your account"
+#       read:pets: "read your pets"
+#   api_key:
+#     type: "apiKey"
+#     name: "api_key"
+#     in: "header"
+definitions:
+  login:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+        format: "password"
+        
+  signup:
+    type: "object"
+    properties:
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+        format: "password"
+      date:
+        type: "string"
+        format: "date"
+      country:
+        type: "string"
+        enum:
+        - "EG"
+        - "US"
+        - "UK"
+      gender:
+        type: "string"
+        enum:
+        - "M"
+        - "F"
+        - "U"
+      phone:
+        type: "string"  
+
+  addchild:
+    type: "object"
+    properties:
+      child_code:
+        type: "string"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      date:
+        type: "string"
+        format: "date"
+      gender:
+        type: "string"
+        enum:
+        - "M"
+        - "F"
+        - "U"
+
+  Child:
+    type: "object"
+    properties:
+      child_id:
+        type: "string"
+        format: "uuid"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      Birth_Date:
+        type: "string"
+        format: "date"
+      gender:
+        type: "string"
+        enum:
+        - "M"
+        - "F"
+        - "U"
+      parent_id:
+        type: "string"
+        format: "uuid"
+      child_code:
+        type: "string"
+
+  modifiy_child:
+    type: "object"
+    properties:
+      child_code:
+        type: "string"
+      firstname:
+        type: "string"
+      lastname:
+        type: "string"
+      date:
+        type: "string"
+        format: "date"
+      gender:
+        type: "string"
+        enum:
+        - "M"
+        - "F"
+        - "U"
+ 
+  selected_child:
+    type: "object"
+    properties:
+      child_code:
+        type: "string"
+ 
+  submit_questionaire:
+    type: "object"
+    properties:
+      child_code:
+        type: "string"
+      model_type:
+        type: "string"
+        enum:
+        - "Adult"
+        - "Adolescent"
+        - "Child"
+        - "Toddler"
+      answers:
+        type: "string"
+        enum:
+        - " Ault 10 answers selected from : - Definitely Agree
+                                             - Slightly Agree
+                                             - Slightly Disagree
+                                             - Definitely Disagree
+          "
+
+        - " Adolescent 10 answers selected from : - Definitely Agree
+                                             - Slightly Agree
+                                             - Slightly Disagree
+                                             - Definitely Disagree
+          "
+        - " child 10 answers selected from : - Definitely Agree
+                                             - Slightly Agree
+                                             - Slightly Disagree
+                                             - Definitely Disagree
+          "        
+
+  get_questionaire_report_pdf:
+    type: "object"
+    properties:
+      questionaire_id:
+        type: "string"
+        format: "uuid"
+
+  Questionaire:
+    type: "object"
+    properties:
+      child_code:
+        type: "string"
+      questionaire_id:
+        type: "string"
+        format: "uuid"
+      date:
+        type: "string"
+        format: "date"
+      time:
+        type: "string"
+        format: "time"
+      result:
+        type: "string"
+        enum:
+        - "4"
+        - "5"
+        - "10"
+
+  Parent:
+    type: "object"
+    properties:
+      parent_id:
+        type: "string"
+        format: "uuid"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+        format: "password"
+      Birth_Date:
+        type: "string"
+        format: "date"
+      country:
+        type: "string"
+        enum:
+        - "EG"
+        - "US"
+        - "UK"
+      gender:
+        type: "string"
+        enum:
+        - "M"
+        - "F"
+        - "U"
+      phone:
+        type: "string"
+        
+  modifiy_parent:
+    type: "object"
+    properties:
+      firstname:
+        type: "string"
+      lastname:
+        type: "string"
+      password:
+        type: "string"
+        format: "password"
+      date:
+        type: "string"
+        format: "date"
+      country:
+        type: "string"
+        enum:
+        - "EG"
+        - "US"
+        - "UK"
+      gender:
+        type: "string"
+        enum:
+        - "M"
+        - "F"
+        - "U"
+      phone:
+        type: "string"
